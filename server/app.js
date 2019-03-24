@@ -1,5 +1,13 @@
+require('dotenv').config();
+
 const express = require('express');
 const next = require('next');
+const mongoose = require('mongoose');
+
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true },
+);
 
 const port = process.env.PORT || 8000;
 const ROOT_URL = `http://localhost:${port}`;

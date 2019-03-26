@@ -1,33 +1,37 @@
 /* eslint-disable react/jsx-one-expression-per-line */
+import React, { Component } from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import withLayout from '../lib/withLayout';
+import withAuth from '../lib/withAuth';
 
-const Index = ({ user }) => (
-  <div style={{ padding: '10px 45px' }}>
-    <Head>
-      <title>Página inicial / sync.me</title>
-      <meta name="description" content="This is the description of the Index page" />
-    </Head>
-    <p>Content on Index page</p>
-    <p>Email: {user.email}</p>
-    <Button variant="contained" color="primary">
-      MUI button
-    </Button>
-  </div>
-);
+class Index extends Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+    }),
+  };
 
-Index.getInitialProps = async ({ query }) => ({ user: query.user });
+  static defaultProps = {
+    user: null,
+  };
 
-Index.propTypes = {
-  user: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-  }),
-};
+  state = {};
 
-Index.defaultProps = {
-  user: null,
-};
+  render() {
+    const { user } = this.props;
 
-export default withLayout(Index);
+    return (
+      <div style={{ padding: '10px 45px' }}>
+        <Head>
+          <title>Dashboard / sync.me</title>
+          <meta name="description" content="List of cloud connected devices" />
+        </Head>
+        <p>Dashboard</p>
+        <p>Email: {user.email}</p>
+      </div>
+    );
+  }
+}
+
+export default withAuth(withLayout(Index), { loginRequired: true });

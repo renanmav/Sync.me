@@ -24,11 +24,13 @@ const Header = ({ user }) => (
           style={{ textAlign: 'left', display: 'flex', alignItems: 'center' }}
         >
           <Link prefetch href="/">
-            <img
-              src="/static/images/logo.svg"
-              alt="Sync.me logo"
-              style={{ margin: '0px auto 0px px', cursor: 'pointer', width: 45 }}
-            />
+            <a style={{ display: 'flex', alignItems: 'center' }}>
+              <img
+                src="/static/images/logo.svg"
+                alt="Sync.me logo"
+                style={{ margin: '0px auto 0px px', cursor: 'pointer', width: 45 }}
+              />
+            </a>
           </Link>
         </Grid>
         <Grid

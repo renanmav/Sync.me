@@ -19,8 +19,6 @@ class Index extends Component {
   state = {};
 
   render() {
-    const { user } = this.props;
-
     return (
       <div style={{ padding: '10px 45px' }}>
         <Head>
@@ -28,7 +26,6 @@ class Index extends Component {
           <meta name="description" content="List of cloud connected devices" />
         </Head>
         <p>Dashboard</p>
-        <p>Email: {user.email}</p>
       </div>
     );
   }

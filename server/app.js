@@ -8,7 +8,7 @@ const session = require('express-session');
 const mongoSessionStore = require('connect-mongo');
 
 mongoose.connect(
-  process.env.MONGO_URL,
+  `mongodb://${process.env.MONGO_URL}/smarthome`,
   { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true },
 );
 

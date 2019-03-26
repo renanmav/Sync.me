@@ -1,9 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-import { Toolbar, Grid } from '@material-ui/core';
+import { Toolbar, withStyles, Button } from '@material-ui/core';
 
-import { styleToolbar } from './SharedStyles';
 import MenuDrop from './MenuDrop';
 
 const optionsMenu = [
@@ -13,52 +13,53 @@ const optionsMenu = [
   },
 ];
 
-const Header = ({ user }) => (
-  <div>
-    <Toolbar style={styleToolbar}>
-      <Grid container direction="row" justify="space-around" align="center">
-        <Grid
-          item
-          sm={10}
-          xs={9}
-          style={{ textAlign: 'left', display: 'flex', alignItems: 'center' }}
-        >
-          <Link prefetch href="/">
-            <a style={{ display: 'flex', alignItems: 'center' }}>
-              <img
-                src="/static/images/logo.svg"
-                alt="Sync.me logo"
-                style={{ margin: '0px auto 0px px', cursor: 'pointer', width: 45 }}
-              />
-            </a>
-          </Link>
-        </Grid>
-        <Grid
-          item
-          sm={1}
-          xs={3}
-          style={{
-            textAlign: 'right',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-          }}
-        >
-          {user ? (
-            <div style={{ whiteSpace: 'nowrap' }}>
-              {user.avatarUrl ? (
-                <MenuDrop options={optionsMenu} src={user.avatarUrl} alt={user.displayName} />
-              ) : null}
-            </div>
-          ) : (
-            <Link prefetch href="/login">
-              <a style={{ margin: '0px 20px 0px auto' }}>Login</a>
-            </Link>
-          )}
-        </Grid>
-      </Grid>
-    </Toolbar>
-  </div>
+const styles = (theme) => ({
+  toolbar: {
+    background: theme.palette.common.white,
+    height: theme.spacing.unit * 8,
+    padding: `0px ${theme.spacing.unit * 3}px`,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  center: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  image: {
+    cursor: 'pointer',
+    height: 42,
+  },
+  loginButton: {
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: 0,
+      paddingLeft: 0,
+    },
+  },
+});
+
+const Header = ({ user, classes }) => (
+  <Toolbar className={classes.toolbar}>
+    <Link prefetch href="/">
+      <a className={classes.center}>
+        <img src="/static/images/logo.svg" alt="Sync.me logo" className={classes.image} />
+      </a>
+    </Link>
+    <div className={classes.grow} />
+    {user ? (
+      <div style={{ whiteSpace: 'nowrap' }}>
+        {user.avatarUrl ? (
+          <MenuDrop options={optionsMenu} src={user.avatarUrl} alt={user.displayName} />
+        ) : null}
+      </div>
+    ) : (
+      <Button color="primary" className={classes.loginButton}>
+        <Link prefetch href="/login">
+          <a>Login</a>
+        </Link>
+      </Button>
+    )}
+  </Toolbar>
 );
 
 Header.propTypes = {
@@ -66,10 +67,11 @@ Header.propTypes = {
     avatarUrl: PropTypes.string,
     displayName: PropTypes.string,
   }),
+  classes: PropTypes.object.isRequired,
 };
 
 Header.defaultProps = {
   user: null,
 };
 
-export default Header;
+export default withStyles(styles)(Header);

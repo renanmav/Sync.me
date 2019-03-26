@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+
 import withLayout from '../lib/withLayout';
 import withAuth from '../lib/withAuth';
 
@@ -31,4 +33,7 @@ class Index extends Component {
   }
 }
 
-export default withAuth(withLayout(Index), { loginRequired: true });
+export default compose(
+  withAuth({ loginRequired: true }),
+  withLayout(),
+)(Index);

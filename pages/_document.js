@@ -23,6 +23,7 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <link rel="stylesheet" href="/static/css/nprogress.min.css" />
           <link rel="stylesheet" href="/static/css/vs.min.css" />
+          <link rel="stylesheet" href="/static/css/reset.min.css" />
         </Head>
         <body
           style={{

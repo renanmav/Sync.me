@@ -7,12 +7,14 @@ import withLayout from '../lib/withLayout';
 const Index = ({ user }) => (
   <div style={{ padding: '10px 45px' }}>
     <Head>
-      <title>Index page</title>
+      <title>Página inicial / sync.me</title>
       <meta name="description" content="This is the description of the Index page" />
     </Head>
     <p>Content on Index page</p>
     <p>Email: {user.email}</p>
-    <Button variant="contained">MUI button</Button>
+    <Button variant="contained" color="primary">
+      MUI button
+    </Button>
   </div>
 );
 

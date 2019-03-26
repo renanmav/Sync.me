@@ -1,9 +1,17 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-import { Toolbar, Grid, Avatar } from '@material-ui/core';
+import { Toolbar, Grid } from '@material-ui/core';
 
 import { styleToolbar } from './SharedStyles';
+import MenuDrop from './MenuDrop';
+
+const optionsMenu = [
+  {
+    text: 'Logout',
+    href: '/logout',
+  },
+];
 
 const Header = ({ user }) => (
   <div>
@@ -17,9 +25,9 @@ const Header = ({ user }) => (
         >
           <Link prefetch href="/">
             <img
-              src="/static/images/favicon32.png"
+              src="/static/images/logo.svg"
               alt="Sync.me logo"
-              style={{ margin: '0px auto 0px px', cursor: 'pointer' }}
+              style={{ margin: '0px auto 0px px', cursor: 'pointer', width: 45 }}
             />
           </Link>
         </Grid>
@@ -36,11 +44,9 @@ const Header = ({ user }) => (
         >
           {user ? (
             <div style={{ whiteSpace: 'nowrap' }}>
-              <Avatar
-                src={user.avatarUrl}
-                alt={user.displayName}
-                style={{ margin: '0px auto 0px 20px' }}
-              />
+              {user.avatarUrl ? (
+                <MenuDrop options={optionsMenu} src={user.avatarUrl} alt={user.displayName} />
+              ) : null}
             </div>
           ) : (
             <Link prefetch href="/login">

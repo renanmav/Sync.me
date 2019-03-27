@@ -52,6 +52,24 @@ function auth({ server }) {
 
   server.use(passport.initialize());
   server.use(passport.session());
+
+  server.get(
+    '/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account' }),
+  );
+
+  server.get(
+    '/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+      res.redirect('/');
+    },
+  );
+
+  server.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
+  });
 }
 
 module.exports = auth;

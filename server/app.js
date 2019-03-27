@@ -42,13 +42,6 @@ app.prepare().then(() => {
   server.use(session(sess));
 
   server.get('/', (req, res) => {
-    const user = {
-      email: 'renan@syncme.com.br',
-      displayName: 'Renan Machado',
-      avatarUrl:
-        'https://lh3.googleusercontent.com/-qoBR6LV-1kA/W00I26ulyII/AAAAAAAAW30/ZJm_fL00Us0PxPPHdR86A-YzUfP2hsK-QCEwYBhgL/w140-h140-p/56e7312c-8925-4642-ab9a-57856fffc72c',
-    };
-    req.user = user;
     app.render(req, res, '/');
   });
 

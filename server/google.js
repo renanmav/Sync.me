@@ -8,7 +8,7 @@ function auth({ server }) {
     let avatarUrl;
 
     if (profile.emails) {
-      email = profile.email[0].value;
+      email = profile.emails[0].value;
     }
 
     if (profile.photos && profile.photos.length > 0) {
@@ -32,12 +32,14 @@ function auth({ server }) {
   };
 
   passport.use(
-    new Strategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.ROOT_URL}/auth/google/callback`,
-    }),
-    verify,
+    new Strategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: `${process.env.ROOT_URL}/auth/google/callback`,
+      },
+      verify,
+    ),
   );
 
   passport.serializeUser((user, done) => {

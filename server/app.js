@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const mongoSessionStore = require('connect-mongo');
 
+const auth = require('./google');
+
 mongoose.connect(
   `mongodb://${process.env.MONGO_URL}/smarthome`,
   { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true },
@@ -41,9 +43,7 @@ app.prepare().then(() => {
 
   server.use(session(sess));
 
-  server.get('/', (req, res) => {
-    app.render(req, res, '/');
-  });
+  auth({ server });
 
   server.get('*', (req, res) => handle(req, res));
 

@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const mongoSessionStore = require('connect-mongo');
 
+const logger = require('./logs');
 const auth = require('./google');
 
 mongoose.connect(
@@ -49,7 +50,6 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err;
-    // eslint-disable-next-line no-console
-    console.log(`> Ready on ${ROOT_URL}`);
+    logger.info(`> Ready on ${ROOT_URL}`);
   });
 });

@@ -7,8 +7,12 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const mongoSessionStore = require('connect-mongo');
 
+const Sentry = require('@sentry/node');
 const logger = require('./logs');
+
 const auth = require('./google');
+
+Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 mongoose.connect(
   `mongodb://${process.env.MONGO_URL}/smarthome`,
@@ -24,6 +28,8 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
+
+  server.use(Sentry.Handlers.requestHandler());
 
   const MongoStore = mongoSessionStore(session);
 
@@ -47,6 +53,8 @@ app.prepare().then(() => {
   auth({ server });
 
   server.get('*', (req, res) => handle(req, res));
+
+  server.use(Sentry.Handlers.errorHandler());
 
   server.listen(port, (err) => {
     if (err) throw err;

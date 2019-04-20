@@ -783,7 +783,7 @@
     "@sentry/types" "4.5.3"
     tslib "^1.9.3"
 
-"@sentry/node@^4.6.5":
+"@sentry/node@4.6.5":
   version "4.6.5"
   resolved "https://registry.yarnpkg.com/@sentry/node/-/node-4.6.5.tgz#48d8a63e0ef693b2560f5b031e1fc8ddf28dd515"
   integrity sha512-Od57hWxJ2V+I0Hg7uIyVxMDxebCTM9fFVKv4n3FeLvA9XAIRtE6iC8/+5YsbKwUOW5eRNLIvRD90rCUsvNf52Q==

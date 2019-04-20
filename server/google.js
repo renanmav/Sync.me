@@ -36,7 +36,10 @@ function auth({ server }) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.ROOT_URL}/auth/google/callback`,
+        callbackURL:
+          process.env.NODE_ENV !== 'production'
+            ? `${process.env.ROOT_URL}:${process.env.ROOT_PORT}/auth/google/callback`
+            : `${process.env.ROOT_URL}/auth/google/callback`,
       },
       verify,
     ),

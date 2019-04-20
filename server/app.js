@@ -19,8 +19,8 @@ mongoose.connect(
   { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true },
 );
 
-const port = process.env.PORT || 8000;
-const ROOT_URL = `http://localhost:${port}`;
+const port = process.env.ROOT_PORT || 8000;
+const ROOT_URL = `${process.env.ROOT_URL}:${port}`;
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });

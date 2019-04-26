@@ -1,14 +1,16 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable import/order */
 require('dotenv').config();
+require('./logs');
+
+const Sentry = require('@sentry/node');
 
 const express = require('express');
 const next = require('next');
 const mongoose = require('mongoose');
 
 const session = require('express-session');
-const mongoSessionStore = require('connect-mongo');
-
-const Sentry = require('@sentry/node');
-const logger = require('./logs');
+const sess = require('./session');
 
 const auth = require('./google');
 
@@ -31,23 +33,6 @@ app.prepare().then(() => {
 
   server.use(Sentry.Handlers.requestHandler());
 
-  const MongoStore = mongoSessionStore(session);
-
-  const sess = {
-    name: process.env.SESSION_NAME,
-    secret: process.env.SESSION_SECRET,
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection,
-      ttl: 14 * 24 * 60 * 60 * 1000,
-    }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      maxAge: 14 * 24 * 60 * 60 * 1000,
-    },
-  };
-
   server.use(session(sess));
 
   auth({ server });
@@ -58,6 +43,7 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err;
-    logger.info(`> Ready on ${ROOT_URL}`);
+    // eslint-disable-next-line no-console
+    console.logger.info(`> Ready on ${ROOT_URL}`);
   });
 });
